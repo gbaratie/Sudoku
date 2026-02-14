@@ -1,4 +1,10 @@
 /* Reset et base */
+:root {
+  --cell-size: 40px;
+  --grid-cols: 9;
+  --board-width: calc(var(--grid-cols) * var(--cell-size) + 4px);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,13 +33,23 @@ h1 {
   font-size: 1.75rem;
   font-weight: 600;
   color: #1e293b;
+  width: 100%;
+}
+
+/* Bloc jeu (grille + boutons alignés) */
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--board-width);
 }
 
 /* Grille Sudoku */
 .board {
   display: grid;
-  grid-template-columns: repeat(9, 40px);
-  grid-template-rows: repeat(9, 40px);
+  grid-template-columns: repeat(var(--grid-cols), var(--cell-size));
+  grid-template-rows: repeat(var(--grid-cols), var(--cell-size));
+  width: var(--board-width);
   background: #fff;
   padding: 2px;
   border-radius: 4px;
@@ -42,8 +58,8 @@ h1 {
 
 .cell {
   border: 1px solid #cbd5e1;
-  width: 40px;
-  height: 40px;
+  width: var(--cell-size);
+  height: var(--cell-size);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,12 +109,12 @@ h1 {
   border-bottom: 2px solid #64748b;
 }
 
-/* Boutons */
+/* Boutons - même largeur que la grille */
 .buttons {
   margin-top: 24px;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 10px;
 }
 

@@ -247,9 +247,12 @@ function buildUI() {
   title.textContent = 'Jeu de Sudoku';
   root.appendChild(title);
 
+  const gameWrapper = document.createElement('div');
+  gameWrapper.className = 'game-wrapper';
+
   boardContainer = document.createElement('div');
   boardContainer.className = 'board';
-  root.appendChild(boardContainer);
+  gameWrapper.appendChild(boardContainer);
 
   const buttons = document.createElement('div');
   buttons.className = 'buttons';
@@ -268,7 +271,8 @@ function buildUI() {
     buttons.appendChild(btn);
   });
 
-  root.appendChild(buttons);
+  gameWrapper.appendChild(buttons);
+  root.appendChild(gameWrapper);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
