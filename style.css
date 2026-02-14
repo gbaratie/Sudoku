@@ -1,15 +1,20 @@
-/* Style de la page Sudoku */
+/* Reset et base */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  min-height: 100vh;
   background-color: #f5f5f5;
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin: 0 0 20px;
 }
 
 /* Grille Sudoku */
@@ -17,13 +22,9 @@ h1 {
   display: grid;
   grid-template-columns: repeat(9, 40px);
   grid-template-rows: repeat(9, 40px);
-  gap: 0;
-  border-collapse: collapse;
 }
 
-/* Case individuelle */
 .cell {
-  box-sizing: border-box;
   border: 1px solid #aaa;
   width: 40px;
   height: 40px;
@@ -31,7 +32,6 @@ h1 {
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  position: relative;
 }
 
 .cell.fixed {
@@ -49,20 +49,26 @@ h1 {
   border: none;
   text-align: center;
   font-size: 20px;
-  outline: none;
   background-color: transparent;
 }
 
-/* Bordures épaisses pour séparer les blocs 3x3 */
+.cell input:focus {
+  outline: none;
+}
+
+/* Bordures des blocs 3x3 */
 .bold-border-left {
   border-left: 2px solid #000;
 }
+
 .bold-border-top {
   border-top: 2px solid #000;
 }
+
 .bold-border-right {
   border-right: 2px solid #000;
 }
+
 .bold-border-bottom {
   border-bottom: 2px solid #000;
 }
@@ -70,11 +76,12 @@ h1 {
 /* Boutons */
 .buttons {
   margin-top: 20px;
+  display: flex;
+  gap: 8px;
 }
 
 .buttons button {
-  margin: 0 5px;
-  padding: 8px 12px;
+  padding: 8px 16px;
   font-size: 14px;
   cursor: pointer;
 }
