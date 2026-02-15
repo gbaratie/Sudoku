@@ -368,7 +368,7 @@ h1 {
 /* Mobile : empêcher le zoom/scroll du clavier, layout adapté */
 @media (max-width: 768px) {
   :root {
-    --cell-size: min(9vw, 36px);
+    --cell-size: min(13vw, 41px);
   }
 
   body {
