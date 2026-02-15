@@ -3,6 +3,8 @@
  * Génération par backtracking, validation en temps réel, mode notes
  */
 
+// --- Constantes ---
+
 const GRID_SIZE = 9;
 const BLOCK_SIZE = 3;
 const HOLES = 40;
@@ -14,6 +16,8 @@ let solution = [];
 let fixedCells = [];
 let notes = [];
 let invalidCells = new Set();
+let options = []; // options[r][c] = Set des chiffres "1".."9" en mode candidat
+let optionMode = false;
 let boardContainer;
 let numberPadContainer;
 let selectedCell = null;
@@ -24,6 +28,8 @@ let notesMode = false;
 function isMobileView() {
   return window.matchMedia('(max-width: 768px)').matches;
 }
+
+// --- Génération de grille (backtracking) ---
 
 function createEmptyBoard() {
   return Array.from({ length: GRID_SIZE }, () => new Array(GRID_SIZE).fill(0));
@@ -128,7 +134,7 @@ function validateAndHighlight() {
           cells.push({ value: board[row][col], key: `${row}-${col}` });
         }
       }
-      findDuplicates(cells).forEach((key) => invalidCells.add(key));
+      findDuplicateKeys(getCellsWithKeys(positions)).forEach((k) => invalidCells.add(k));
     }
   }
 
@@ -139,6 +145,32 @@ function validateAndHighlight() {
       cellElems[i++].classList.toggle('invalid', invalidCells.has(`${r}-${c}`));
     }
   }
+  return Array.from(peers).map((key) => key.split('-').map(Number));
+}
+
+function updateOptionsDisplayForCell(r, c) {
+  const cellElem = boardContainer.children[r * GRID_SIZE + c];
+  const optsGrid = cellElem?.querySelector('.cell-options');
+  if (!optsGrid) return;
+  const set = options[r][c];
+  optsGrid.querySelectorAll('.option-digit').forEach((el) => {
+    el.classList.toggle('visible', set.has(el.dataset.digit));
+  });
+}
+
+function buildOptionsGrid(r, c) {
+  const optsGrid = document.createElement('div');
+  optsGrid.className = 'cell-options';
+  optsGrid.setAttribute('aria-hidden', 'true');
+  for (let d = 1; d <= 9; d++) {
+    const span = document.createElement('span');
+    span.className = 'option-digit';
+    span.dataset.digit = String(d);
+    span.textContent = d;
+    if (options[r][c].has(String(d))) span.classList.add('visible');
+    optsGrid.appendChild(span);
+  }
+  return optsGrid;
 }
 
 /* --- Affichage de la grille --- */
@@ -366,7 +398,12 @@ function generateNewGame() {
     fixedCells.push(fixedRow);
     notes.push(notesRow);
   }
+}
 
+function generateNewGame() {
+  const solved = generateSolvedBoard();
+  const puzzle = generatePuzzle(solved, HOLES);
+  initBoardFromPuzzle(puzzle, solved);
   invalidCells = new Set();
   renderBoard();
 }
