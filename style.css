@@ -67,29 +67,20 @@ h1 {
   font-weight: 500;
 }
 
+/* Chiffres initiaux (donnés au départ) */
 .cell.fixed {
   background-color: #f1f5f9;
-  color: #334155;
+  color: #1e293b;
   font-weight: 600;
+}
+
+/* Chiffres ajoutés par le joueur */
+.cell.editable {
+  color: #3b82f6;
 }
 
 .cell.invalid {
   background-color: #fecaca;
-}
-
-.cell input {
-  width: 100%;
-  height: 100%;
-  border: none;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 500;
-  background-color: transparent;
-}
-
-.cell input:focus {
-  outline: none;
-  background-color: #eff6ff;
 }
 
 /* Bordures des blocs 3x3 */
@@ -138,6 +129,12 @@ h1 {
 
 .buttons button:active {
   background: #f1f5f9;
+}
+
+.buttons button.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1d4ed8;
 }
 
 /* Clavier numérique mobile - caché par défaut */
@@ -301,7 +298,7 @@ h1 {
   background: #2563eb;
 }
 
-/* Cellules éditables en mode mobile (clic, pas clavier) */
+/* Cellules éditables (clic + clavier/pavé numérique) */
 .cell.editable {
   cursor: pointer;
   user-select: none;
