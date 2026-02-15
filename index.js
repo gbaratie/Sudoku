@@ -134,7 +134,7 @@ function validateAndHighlight() {
           cells.push({ value: board[row][col], key: `${row}-${col}` });
         }
       }
-      findDuplicateKeys(getCellsWithKeys(positions)).forEach((k) => invalidCells.add(k));
+      findDuplicates(cells).forEach((key) => invalidCells.add(key));
     }
   }
 
@@ -145,7 +145,6 @@ function validateAndHighlight() {
       cellElems[i++].classList.toggle('invalid', invalidCells.has(`${r}-${c}`));
     }
   }
-  return Array.from(peers).map((key) => key.split('-').map(Number));
 }
 
 function updateOptionsDisplayForCell(r, c) {
@@ -398,12 +397,7 @@ function generateNewGame() {
     fixedCells.push(fixedRow);
     notes.push(notesRow);
   }
-}
 
-function generateNewGame() {
-  const solved = generateSolvedBoard();
-  const puzzle = generatePuzzle(solved, HOLES);
-  initBoardFromPuzzle(puzzle, solved);
   invalidCells = new Set();
   renderBoard();
 }
