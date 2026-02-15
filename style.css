@@ -67,29 +67,20 @@ h1 {
   font-weight: 500;
 }
 
+/* Chiffres initiaux (donnés au départ) */
 .cell.fixed {
   background-color: #f1f5f9;
-  color: #334155;
+  color: #1e293b;
   font-weight: 600;
+}
+
+/* Chiffres ajoutés par le joueur */
+.cell.editable {
+  color: #3b82f6;
 }
 
 .cell.invalid {
   background-color: #fecaca;
-}
-
-.cell input {
-  width: 100%;
-  height: 100%;
-  border: none;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 500;
-  background-color: transparent;
-}
-
-.cell input:focus {
-  outline: none;
-  background-color: #eff6ff;
 }
 
 /* En cellule avec options : fond focus semi-transparent pour voir les petits chiffres */
@@ -189,4 +180,214 @@ h1 {
 
 .buttons button:active {
   background: #f1f5f9;
+}
+
+.buttons button.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+/* Clavier numérique mobile - caché par défaut */
+.number-pad-wrapper {
+  display: none;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.number-pad-wrapper.visible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.number-pad-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: var(--board-width);
+}
+
+.number-pad-row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  width: 100%;
+}
+
+.num-btn {
+  aspect-ratio: 1;
+  min-height: 28px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.num-btn:active {
+  transform: scale(0.95);
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.number-pad-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  gap: 6px;
+  width: 100%;
+}
+
+.action-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #334155;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: normal;
+  line-height: 1.2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.action-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.action-btn.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+/* Notes (chiffres candidats) dans les cellules */
+.cell-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  font-size: 8px;
+  color: #64748b;
+  place-items: center;
+}
+
+.cell-notes span {
+  min-width: 0.8em;
+  text-align: center;
+}
+
+/* Modal succès */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-message {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.modal-btn.primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+.modal-btn:hover {
+  background: #f8fafc;
+}
+
+.modal-btn.primary:hover {
+  background: #2563eb;
+}
+
+/* Cellules éditables (clic + clavier/pavé numérique) */
+.cell.editable {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cell.editable.selected {
+  background-color: #bfdbfe;
+  box-shadow: inset 0 0 0 2px #3b82f6;
+}
+
+.cell.editable:active {
+  background-color: #eff6ff;
+}
+
+/* Mobile : empêcher le zoom/scroll du clavier, layout adapté */
+@media (max-width: 768px) {
+  :root {
+    --cell-size: min(9vw, 36px);
+  }
+
+  body {
+    padding: 12px;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+
+  .game-wrapper {
+    width: 100%;
+    max-width: var(--board-width);
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
 }
